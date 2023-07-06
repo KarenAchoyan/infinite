@@ -1,10 +1,11 @@
 import React from 'react';
-import { Typography} from 'antd';
-import {Carousel} from 'react-responsive-carousel';
+import { Typography } from 'antd';
+import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Button from "@/pages/Elements/Button/button";
+import Button from '@/pages/Elements/Button/button';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 const Steps = () => {
   return (
@@ -15,8 +16,8 @@ const Steps = () => {
       <Carousel
         showThumbs={false}
         emulateTouch={true}
-        infiniteLoop={true}
-        showArrows={false}
+        // infiniteLoop={true}
+        showArrows={true}
         autoPlay={true}
         interval={3000}
         renderArrowPrev={(onClickHandler, hasPrev, label) =>
@@ -27,7 +28,7 @@ const Steps = () => {
               onClick={onClickHandler}
               title={label}
             >
-              Prev
+              <LeftOutlined />
             </button>
           )
         }
@@ -39,7 +40,7 @@ const Steps = () => {
               onClick={onClickHandler}
               title={label}
             >
-              Next
+              <RightOutlined />
             </button>
           )
         }
@@ -51,7 +52,7 @@ const Steps = () => {
             </div>
             <div className="slide-place-3">
               <div className="content-slide-place">
-                <h1>Step One! 2</h1>
+                <h1>Step One! 1</h1>
                 <h2>Choose Location</h2>
                 <h3>Choose your location and find your best car.</h3>
                 <Button>Reserve Now</Button>

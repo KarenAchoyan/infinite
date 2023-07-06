@@ -1,31 +1,23 @@
-import React, {useState} from 'react';
-import {Table, Popconfirm, message, Modal, Form, Input, Button, Space} from 'antd';
-import {EditOutlined, DeleteOutlined} from '@ant-design/icons';
+import React, { useState, useEffect } from 'react';
+import {Table, Button, Modal, message, Form, Space, Popconfirm, Input} from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Navbar from "@/pages/admin/header/header";
+import { deleteStaff, getStaff, updateStaff } from "@/store/staff/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const AllStaffPage = () => {
-  const [staffList, setStaffList] = useState([
-    {id: 1, avatar: 'https://infinite.snapsite.am/static/media/staff-1.6f54f9f761ff6599537b.png', fullname: 'John Doe'},
-    {
-      id: 2,
-      avatar: 'https://infinite.snapsite.am/static/media/staff-1.6f54f9f761ff6599537b.png',
-      fullname: 'Jane Smith'
-    },
-    {
-      id: 3,
-      avatar: 'https://infinite.snapsite.am/static/media/staff-1.6f54f9f761ff6599537b.png',
-      fullname: 'Michael Johnson'
-    },
-  ]);
+  const staffList = useSelector((state) => state.staff.staffList);
   const [editingStaff, setEditingStaff] = useState(null);
   const [editForm] = Form.useForm();
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getStaff.request());
+  }, [dispatch]);
 
   const handleDeleteStaff = (staffId) => {
-    setStaffList((prevStaffList) =>
-      prevStaffList.filter((staff) => staff.id !== staffId)
-    );
-    message.success('staff deleted successfully');
+    dispatch(deleteStaff.request(staffId));
+    message.success('Staff deleted successfully');
   };
 
   const handleEditStaff = (staffId) => {
@@ -40,23 +32,18 @@ const AllStaffPage = () => {
   };
 
   const handleUpdateStaff = (values) => {
-    setStaffList((prevStaffList) =>
-      prevStaffList.map((staff) => {
-        if (staff.id === editingStaff.id) {
-          return {
-            ...staff,
-            fullname: values.fullname,
-          };
-        }
-        return staff;
-      })
-    );
+    dispatch(updateStaff(editingStaff.id, values.fullname));
     setEditModalVisible(false);
     setEditingStaff(null);
-    message.success('staff updated successfully');
+    message.success('Staff updated successfully');
   };
 
   const columns = [
+    {
+      title:"Id",
+      dataIndex:'id',
+      key:'id'
+    },
     {
       title: 'Avatar',
       dataIndex: 'avatar',
@@ -65,7 +52,7 @@ const AllStaffPage = () => {
         <img
           src={avatar}
           alt="Avatar"
-          style={{width: '50px', height: '50px', borderRadius: '50%'}}
+          style={{ width: '50px', height: '50px', borderRadius: '50%' }}
         />
       ),
     },
@@ -80,20 +67,13 @@ const AllStaffPage = () => {
       key: 'action',
       render: (staffId) => (
         <Space size="small">
-          <Button
-            type="primary"
-            icon={<EditOutlined/>}
-            onClick={() => handleEditStaff(staffId)}
-          >
-            Edit
-          </Button>
           <Popconfirm
             title="Are you sure you want to delete this staff member?"
             onConfirm={() => handleDeleteStaff(staffId)}
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary" danger icon={<DeleteOutlined/>}>
+            <Button type="primary" danger icon={<DeleteOutlined />} >
               Delete
             </Button>
           </Popconfirm>
@@ -104,9 +84,9 @@ const AllStaffPage = () => {
 
   return (
     <Navbar>
-      <div style={{margin: '24px'}}>
+      <div style={{ margin: '24px' }}>
         <h1>All Staff</h1>
-        <Table dataSource={staffList} columns={columns}/>
+        <Table dataSource={staffList} columns={columns} />
 
         <Modal
           title="Edit Staff"
@@ -118,9 +98,9 @@ const AllStaffPage = () => {
             <Form.Item
               name="fullname"
               label="Fullname"
-              rules={[{required: true, message: 'Please enter fullname'}]}
+              rules={[{ required: true, message: 'Please enter fullname' }]}
             >
-              <Input/>
+              <Input />
             </Form.Item>
 
             <Form.Item>

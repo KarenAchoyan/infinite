@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Form, Input, Upload, Button, message} from 'antd';
-import {PlusOutlined} from '@ant-design/icons';
+import {PlusOutlined, UploadOutlined} from '@ant-design/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Navbar from '@/pages/admin/header/header';
@@ -14,22 +14,33 @@ const AddBlogPage = () => {
   const [content, setContent] = useState('');
   const [avatar, setAvatar] = useState(null);
 
-  const handleAvatarChange = (info) => {
-    // Get the uploaded file from the response and set it as the avatar
-    const uploadedFile = info.file.response;
-    setAvatar(uploadedFile);
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
+
+  const handleAvatarChange = async (info) => {
+    const file = info.fileList[0].originFileObj;
+    if (file instanceof Blob) {
+      setAvatarFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setAvatarPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (values) => {
     // Add the avatar to the form values
     const formData = new FormData();
     formData.append('title', values.title);
-    formData.append('avatar', avatar);
+    formData.append('avatar', values.avatar.file);
     formData.append('content', content);
 
 
     dispatch(addBlog.request(formData));
     form.resetFields();
+    setAvatarFile("")
+    setAvatarPreview("")
     message.success('Blog successfully added!');
   };
 
@@ -46,17 +57,21 @@ const AddBlogPage = () => {
         </Form.Item>
         <Form.Item label="Avatar" name="avatar">
           <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
+            accept="image/*"
             showUploadList={false}
-            beforeUpload={() => false}
+            beforeUpload={() => false} // Disable automatic upload
+            fileList={avatarFile ? [avatarFile] : []}
             onChange={handleAvatarChange}
           >
-            <div>
-              <PlusOutlined/>
-              <div style={{marginTop: 8}}>Upload Avatar</div>
-            </div>
+            {avatarPreview ? (
+              <img
+                src={avatarPreview}
+                alt="Avatar"
+                style={{maxWidth: '100%', maxHeight: '200px'}}
+              />
+            ) : (
+              <Button icon={<UploadOutlined/>}>Upload Avatar</Button>
+            )}
           </Upload>
         </Form.Item>
         <Form.Item label="Content" name="content">

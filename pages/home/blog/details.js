@@ -1,15 +1,15 @@
 import React from 'react';
 import Button from "@/pages/Elements/Button/button";
+import {baseUrl} from "@/configs/axiosIntance";
 
-const Details = (props) => {
+const Details = ({item}) => {
     return (
             <div className="blog-item">
                 <div className="avatar-blog">
-                    <img src={'blog-1.png'} alt=""/>
+                    <img src={baseUrl+"/"+item.avatar} alt=""/>
                 </div>
                 <div className="info-blog">
-                    <h2>The Best Cars to Hire for a Infinite Service</h2>
-                    <p>The Silimo will constantly update its fleet to include</p>
+                    <h2>{item.title}</h2>
                     <Button>More</Button>
                 </div>
             </div>

@@ -32,6 +32,14 @@ const AllBlogPage = () => {
       key: 'title',
     },
     {
+      title: 'avatar',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      render:(_,blog)=>(
+        <img src={"../../../images/"+blog.avatar} style={{width:'150px'}} alt=""/>
+      )
+    },
+    {
       title: 'Delete',
       key: 'actions',
       render: (_, blog) => (

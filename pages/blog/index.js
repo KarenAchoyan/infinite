@@ -1,13 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Button from "@/pages/Elements/Button/button";
 import FooterBanner from "@/pages/home/footerBanner/footerBanner";
 import Details from "@/pages/home/blog/details";
 import Header from "@/pages/header/header";
 import Footer from "@/pages/footer/footer";
+import Head from "next/head";
+import {useDispatch, useSelector} from "react-redux";
+import {getBlogs} from "@/store/blog/actions";
 
 const Blog = () => {
+  const blogs = useSelector((state) => state.blog.blogs);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBlogs.request());
+  }, [dispatch]);
   return (
     <div>
+      <Head>
+        <title>Blog infinite</title>
+      </Head>
       <Header/>
       <div className={'Blog'}>
         <div className="banner-blog">
@@ -28,9 +40,9 @@ const Blog = () => {
           </div>
         </div>
         <div className="blog-row">
-          <Details/>
-          <Details/>
-          <Details/>
+          {blogs.map((item) => (
+            <Details item={item}/>
+          ))}
         </div>
         <FooterBanner/>
 

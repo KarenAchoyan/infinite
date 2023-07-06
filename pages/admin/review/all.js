@@ -1,40 +1,39 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Table, Button, Modal, Form, Input} from 'antd';
 import Navbar from "@/pages/admin/header/header";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteReview, getReviews, updateReview} from "@/store/review/actions";
 
 const {confirm} = Modal;
 
-const AllBlogPage = () => {
-  const [dataSource, setDataSource] = useState([
-    {
-      id: 1,
-      title: 'blog 1',
-      author: 'John Doe',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    },
-    {
-      id: 2,
-      title: 'blog 2',
-      author: 'Jane Smith',
-      content: 'Praesent eget condimentum dolor, at vulputate justo.',
-    },
-    // Add more blog data objects as needed
-  ]);
+const AllReview = () => {
 
+  const dispatch = useDispatch();
+  const [editForm] = Form.useForm();
   const [editingRecord, setEditingRecord] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editForm] = Form.useForm();
+
+  const reviews = useSelector(state => state.review.reviews);
+
+  useEffect(() => {
+    dispatch(getReviews.request());
+  }, [dispatch]);
 
   const columns = [
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-    },
     {
       title: 'Author',
       dataIndex: 'author',
       key: 'author',
+    },
+    {
+      title: 'Stars',
+      dataIndex: 'stars',
+      key: 'stars',
+    },
+    {
+      title: 'Content',
+      dataIndex: 'content',
+      key: 'content',
     },
     {
       title: 'Actions',
@@ -60,10 +59,10 @@ const AllBlogPage = () => {
 
   const handleEditSave = () => {
     editForm.validateFields().then((values) => {
-      const updatedDataSource = dataSource.map((record) =>
-        record.id === editingRecord.id ? {...record, ...values} : record
+      const updatedReviews = reviews.map((review) =>
+        review.id === editingRecord.id ? {...review, ...values} : review
       );
-      setDataSource(updatedDataSource);
+      dispatch(updateReview.request(updatedReviews));
       setIsEditing(false);
       editForm.resetFields();
     });
@@ -75,13 +74,12 @@ const AllBlogPage = () => {
   };
 
   const handleDelete = (record) => {
-    const updatedDataSource = dataSource.filter((item) => item.id !== record.id);
-    setDataSource(updatedDataSource);
+    dispatch(deleteReview.request(record.id));
   };
 
   const showDeleteConfirm = (record) => {
     confirm({
-      title: 'Are you sure you want to delete this blog?',
+      title: 'Are you sure you want to delete this review?',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
@@ -89,10 +87,11 @@ const AllBlogPage = () => {
     });
   };
 
+
   return (
     <Navbar>
-      <Card title="All Blogs">
-        <Table dataSource={dataSource} columns={columns}/>
+      <Card title="All Review">
+        <Table dataSource={reviews} columns={columns}/>
 
         <Modal
           title="Edit Blog"
@@ -102,16 +101,16 @@ const AllBlogPage = () => {
         >
           <Form form={editForm} layout="vertical">
             <Form.Item
-              name="title"
-              label="Title"
-              rules={[{required: true, message: 'Please enter a title'}]}
+              name="author"
+              label="Author"
+              rules={[{required: true, message: 'Please enter an author'}]}
             >
               <Input/>
             </Form.Item>
             <Form.Item
-              name="author"
-              label="Author"
-              rules={[{required: true, message: 'Please enter an author'}]}
+              name="stars"
+              label="Stars"
+              rules={[{required: true, message: 'Please enter an stars'}]}
             >
               <Input/>
             </Form.Item>
@@ -129,4 +128,4 @@ const AllBlogPage = () => {
   );
 };
 
-export default AllBlogPage;
+export default AllReview;

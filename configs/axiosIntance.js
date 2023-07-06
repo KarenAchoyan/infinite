@@ -20,6 +20,8 @@ export const handleHeaders = (token = "") => {
   localStorage.setItem("accessToken", token);
 };
 
+export const baseUrl  = process.env.API_URL;
+
 export const deleteToken = () => {
   delete axiosInstance.defaults.headers["Authorization"];
 };

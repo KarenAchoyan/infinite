@@ -13,7 +13,7 @@ function* fetchStaffSaga({ payload = {} }) {
   try {
     const response = yield call(() => axiosInstance.get('/staff/all', payload));
     const staffList = response.data; // Assuming the staff data is in response.data
-    yield put(getStaff.success(staffList.staffList));
+    yield put(getStaff.success(staffList.staff));
   } catch (error) {
     yield put(getStaff.failure(error.message));
   }

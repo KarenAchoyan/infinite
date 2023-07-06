@@ -3,18 +3,22 @@ import Link from "next/link";
 import Button from "@/pages/Elements/Button/button";
 
 const Banner = () => {
-    const [isHeaderVisible, setHeaderVisible] = useState(false);
+    const [isHeaderVisible, setHeaderVisible] = useState(true);
 
     useEffect(() => {
         let prevScrollPos = window.pageYOffset;
 
         const handleScroll = () => {
             const currentScrollPos = window.pageYOffset;
-            const isScrolledDown = prevScrollPos < currentScrollPos;
-
-            setHeaderVisible(isScrolledDown);
+            if (currentScrollPos === 0) {
+                setHeaderVisible(true); // Scroll is at the top
+            }
+            else {
+                setHeaderVisible(false); // Scroll is not at the top
+            }
             prevScrollPos = currentScrollPos;
         };
+
 
         window.addEventListener('scroll', handleScroll);
 
@@ -25,7 +29,7 @@ const Banner = () => {
     return (
         <div>
             <div className={'banner-slider'}>
-                <div className={isHeaderVisible ? "curtain-banner close" : "curtain-banner"}
+                <div className={isHeaderVisible ? "curtain-banner" : "curtain-banner close"}
                      style={{backgroundImage: `url(banner.png)`}}>
                 </div>
                 <div className="content-banner" style={{backgroundImage: `url(background-banner.png)`}}>

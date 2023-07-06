@@ -4,6 +4,8 @@ import {categorySaga} from "@/store/category/saga";
 import blogSaga from "@/store/blog/saga";
 import {contactSaga} from "@/store/about/saga";
 import {staffSaga} from "@/store/staff/saga";
+import carSaga from "@/store/car/saga";
+import reviewSaga from "@/store/review/saga";
 
 function* rootSaga() {
   yield all([
@@ -11,7 +13,9 @@ function* rootSaga() {
     categorySaga(),
     blogSaga(),
     contactSaga(),
-    staffSaga()
+    staffSaga(),
+    carSaga(),
+    reviewSaga()
   ]);
 }
 

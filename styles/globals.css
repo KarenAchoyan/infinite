@@ -156,10 +156,11 @@ header a {
 .car-service {
     position: relative;
     display: flex;
+    justify-content: space-between;
 }
 
 .car-service-content {
-    width: 70%;
+    width: 80%;
     margin: 100px auto;
 }
 
@@ -174,7 +175,7 @@ header a {
 }
 
 .car-avatar {
-    width: 70%;
+    width: 60%;
 }
 
 .car-avatar img {
@@ -305,6 +306,31 @@ header a {
 
 /*suggesstions end*/
 /*steps start*/
+button.carousel-prev {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 222222;
+}
+button.carousel-next {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    z-index: 222222;
+    font-size: 50px;
+    cursor: pointer;
+}
+button.carousel-next:hover, button.carousel-prev:hover{
+        opacity: .7;
+}
 .person-step {
     width: 200px!important;
 }
@@ -516,6 +542,9 @@ header a {
     width: 90%;
     margin: 50px auto;
     justify-content: space-between;
+}
+.row-staff h2{
+    margin-top: 20px;
 }
 
 .item-staff.position-down {

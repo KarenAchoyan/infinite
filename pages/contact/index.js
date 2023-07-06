@@ -3,6 +3,7 @@ import {Form, Input, Button, message} from 'antd';
 import FooterBanner from '../Home/FooterBanner/footerBanner';
 import Header from "@/pages/header/header";
 import Footer from "@/pages/footer/footer";
+import Head from "next/head";
 
 const {TextArea} = Input;
 
@@ -18,6 +19,9 @@ const Contact = () => {
   };
   return (
     <div>
+      <Head>
+        <title>Contact page infinite</title>
+      </Head>
       <Header/>
       <div className={'Contact'}
            style={{backgroundImage: `url(${'background-banner.png'})`, backgroundAttachment: 'fixed'}}>

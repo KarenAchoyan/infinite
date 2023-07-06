@@ -70,6 +70,14 @@ const Navbar = (props) => {
                           <Link href="/admin/category/add">Create Category</Link>
                       </Menu.Item>
                   </SubMenu>
+                  <SubMenu key="sub19" icon={<UserAddOutlined />} title="Car">
+                      <Menu.Item key="17">
+                          <Link href="/admin/car/all">All Car</Link>
+                      </Menu.Item>
+                      <Menu.Item key="18">
+                          <Link href="/admin/car/add">Create Car</Link>
+                      </Menu.Item>
+                  </SubMenu>
                   <SubMenu key="sub5" icon={<UserOutlined />} title="Contact">
                       <Menu.Item key="12">
                           <Link href="/admin/contact/all">Form Result</Link>

@@ -1,19 +1,21 @@
-import React, {useState} from 'react';
-import {Form, Input, Button, message} from 'antd';
-import Navbar from "@/pages/admin/header/header";
+import React, { useState } from 'react';
+import { Form, Input, Button, message } from 'antd';
+import Navbar from '@/pages/admin/header/header';
+import { useDispatch } from 'react-redux';
+import { addReview } from '@/store/review/actions';
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const Add = () => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onFinish = (values) => {
-    console.log('Form values:', values);
-    // You can perform further actions with the form values, such as submitting to an API or updating state
-    setIsSubmitted(true);
+    dispatch(addReview.request(values));
     form.resetFields();
-    message.success('Successfully added!');
+    setIsSubmitted(true);
+    message.success('Review successfully added!');
   };
 
   return (
@@ -22,17 +24,25 @@ const Add = () => {
         <Form.Item
           label="Content"
           name="content"
-          rules={[{required: true, message: 'Please enter the content.'}]}
+          rules={[{ required: true, message: 'Please enter the content.' }]}
         >
-          <TextArea rows={4}/>
+          <TextArea rows={4} />
         </Form.Item>
 
         <Form.Item
           label="Author"
           name="author"
-          rules={[{required: true, message: 'Please enter the author.'}]}
+          rules={[{ required: true, message: 'Please enter the author.' }]}
         >
-          <Input/>
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Stars"
+          name="stars"
+          rules={[{ required: true, message: 'Please enter the number of stars.' }]}
+        >
+          <Input type="number" min={1} max={5} />
         </Form.Item>
 
         <Form.Item>
@@ -41,9 +51,7 @@ const Add = () => {
           </Button>
         </Form.Item>
 
-        {isSubmitted && (
-          <p style={{color: 'green'}}>Successfully added!</p>
-        )}
+        {isSubmitted && <p style={{ color: 'green' }}>Successfully added!</p>}
       </Form>
     </Navbar>
   );

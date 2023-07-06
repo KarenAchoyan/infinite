@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getReviews} from "@/store/review/actions";
 
 const Review = () => {
-  const [reviews, setReviews] = useState([
-    {id: 1, review: "Been using them for a decade at least for runs to/from LAX. Quality service. Nice cars. Well prepared for the trip. Always on time or early. I’d never Uber to LAX. Chances of trunk not having sufficient space is high. This is a Limo service for businessman.1", fullName: "Nick Nicname", stars: 4},
-    {id: 2, review: "Been using them for a decade at least for runs to/from LAX. Quality service. Nice cars. Well prepared for the trip. Always on time or early. I’d never Uber to LAX. Chances of trunk not having sufficient space is high. This is a Limo service for businessman.2", fullName: "Nick Nicname", stars: 4},
-    {id: 3, review: "Been using them for a decade at least for runs to/from LAX. Quality service. Nice cars. Well prepared for the trip. Always on time or early. I’d never Uber to LAX. Chances of trunk not having sufficient space is high. This is a Limo service for businessman.3", fullName: "Nick Nicname", stars: 4},
-    {id: 4, review: "Been using them for a decade at least for runs to/from LAX. Quality service. Nice cars. Well prepared for the trip. Always on time or early. I’d never Uber to LAX. Chances of trunk not having sufficient space is high. This is a Limo service for businessman.4", fullName: "Nick Nicname", stars: 4},
-  ])
+  const reviews = useSelector(state => state.review.reviews);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getReviews.request());
+  }, [dispatch]);
+
   const [currentImage, setCurrentImage] = useState(0);
 
   const goToPrevious = () => {
@@ -39,8 +43,8 @@ const Review = () => {
               >
                 <div className="container-step-review">
                   <h3>What people say about us?</h3>
-                  <h5>{item.review}</h5>
-                  <h2>Nick Mancini</h2>
+                  <h5>{item.content}</h5>
+                  <h2>{item.author}</h2>
                   <div className="stars-review">
                     <Stars count={item.stars}/>
                   </div>
