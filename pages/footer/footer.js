@@ -20,9 +20,9 @@ const Footer = () => {
         <div className="place-footer">
           <h4>Contact Us</h4>
           <ul>
-            <li>Address</li>
-            <li>infinite@co</li>
-            <li>+123123123</li>
+            <li><a href="">Address</a></li>
+            <li><a href="">infinite@co</a></li>
+            <li><a href="">+123123123</a></li>
           </ul>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from "@/pages/Elements/Button/button";
 import {baseUrl} from "@/configs/axiosIntance";
+import Link from "next/link";
 
 const Details = ({item}) => {
     return (
@@ -10,7 +11,9 @@ const Details = ({item}) => {
                 </div>
                 <div className="info-blog">
                     <h2>{item.title}</h2>
-                    <Button>More</Button>
+                    <Link href={'/blog/'+item.id}>
+                      <Button>More</Button>
+                    </Link>
                 </div>
             </div>
     );

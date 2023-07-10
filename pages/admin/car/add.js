@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Form, Input, Checkbox, Select, Button, message, Upload } from 'antd';
 import Navbar from '@/pages/admin/header/header';
 import { useDispatch, useSelector } from 'react-redux';
 import { UploadOutlined } from '@ant-design/icons';
 import { addCar } from '@/store/car/actions';
+import {getCategories} from "@/store/category/actions";
 
 const { Option } = Select;
 
 const AddCarPage = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
-
   const [form] = Form.useForm();
   const [description, setDescription] = useState('');
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
-
+  useEffect(() => {
+    dispatch(getCategories.request());
+  }, [dispatch]);
   const handleAvatarChange = async (info) => {
     const file = info.fileList[0].originFileObj;
     if (file instanceof Blob) {

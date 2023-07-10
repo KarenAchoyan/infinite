@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { Drawer } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import {Drawer} from 'antd';
 import MobileMenu from './mobileMenu';
 import Link from 'next/link';
 import Button from '@/pages/Elements/Button/button';
@@ -21,7 +21,7 @@ const Header = () => {
         <div className="container-header">
           <div className="logo">
             <Link href="/home">
-              <img src="logo.png" alt="" />
+              <img src="logo.png" alt=""/>
             </Link>
           </div>
           <div className="menu">
@@ -30,7 +30,32 @@ const Header = () => {
                 <Link href="/home">Home</Link>
               </li>
               <li>
-                <Link href="/about">Service</Link>
+                Service
+                <div className="dropdown-service">
+                  <div className="dropdown-service-content">
+                    <div className="item-dropdown">
+                      <p>
+                        Dropdown <span className="arrow">&#9654;</span>
+                      </p>
+                      <div className="sub-dropdown">
+                        <div className="sub-dropdown-content">
+                          <div className="item-dropdown">Subdropdown Item 1</div>
+                          <div className="item-dropdown">Subdropdown Item 2</div>
+                          <div className="item-dropdown">Subdropdown Item 3</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="item-dropdown">
+                      <p>Dropdown</p>
+                    </div>
+                    <div className="item-dropdown">
+                      <p>Dropdown</p>
+                    </div>
+                    <div className="item-dropdown">
+                      <p>Dropdown</p>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li className={router.pathname === '/about' ? 'active' : ''}>
                 <Link href="/about">About us</Link>
@@ -57,7 +82,7 @@ const Header = () => {
             </span>
           </div>
           <Drawer title="Infinite" placement="right" closable={false} onClose={onClose} visible={visible}>
-            <MobileMenu />
+            <MobileMenu/>
           </Drawer>
         </div>
       </header>

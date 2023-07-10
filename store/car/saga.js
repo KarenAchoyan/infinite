@@ -19,10 +19,10 @@ function* handleGetCars({ payload = {} }) {
 
 function* handleGetCar(action) {
   try {
-    // const car = yield call(api.getCar, action.payload);
-    // yield put(getCar.success(car));
+    const car = yield call(() => axiosInstance.get('/car/first', action.payload));
+    yield put(getCar.success(car));
   } catch (error) {
-    // yield put(getCar.failure(error.message));
+    yield put(getCar.failure(error.message));
   }
 }
 

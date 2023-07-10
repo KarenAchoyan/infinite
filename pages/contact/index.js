@@ -1,11 +1,12 @@
 import React from 'react';
-import {Form, Input, Button, message} from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import FooterBanner from '../Home/FooterBanner/footerBanner';
-import Header from "@/pages/header/header";
-import Footer from "@/pages/footer/footer";
-import Head from "next/head";
+import Header from '@/pages/header/header';
+import Footer from '@/pages/footer/footer';
+import Head from 'next/head';
+import { PhoneOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const Contact = () => {
   const onFinish = (values) => {
@@ -22,9 +23,14 @@ const Contact = () => {
       <Head>
         <title>Contact page infinite</title>
       </Head>
-      <Header/>
-      <div className={'Contact'}
-           style={{backgroundImage: `url(${'background-banner.png'})`, backgroundAttachment: 'fixed'}}>
+      <Header />
+      <div
+        className={'Contact'}
+        style={{
+          backgroundImage: `url(${'background-banner.png'})`,
+          backgroundAttachment: 'fixed',
+        }}
+      >
         <div className="content-contact">
           <div className="section-contact">
             <h1>Get in touch with us</h1>
@@ -35,7 +41,7 @@ const Contact = () => {
             <div className="row-icons">
               <div className="group-contact">
                 <div className="icon-round">
-                  {/*<CallIcon/>*/}
+                  {/* <CallIcon/> */}
                 </div>
                 <div>
                   <p>Have a question?</p>
@@ -44,7 +50,7 @@ const Contact = () => {
               </div>
               <div className="group-contact">
                 <div className="icon-round">
-                  {/*<MailOutlineIcon/>*/}
+                  <MailOutlined />
                 </div>
                 <div>
                   <p>Contact us at</p>
@@ -53,11 +59,11 @@ const Contact = () => {
               </div>
               <div className="group-contact">
                 <div className="icon-round">
-                  {/*<FmdGoodOutlinedIcon/>*/}
+                  {/* <FmdGoodOutlinedIcon/> */}
                 </div>
                 <div>
-                  <p>Our Adress</p>
-                  <h5>Adress</h5>
+                  <p>Our Address</p>
+                  <h5>Address</h5>
                 </div>
               </div>
             </div>
@@ -65,25 +71,67 @@ const Contact = () => {
           <div className="section-contact">
             <div className="form-contact">
               <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Form.Item name="name" rules={[{ required: true, message: 'Please enter your name' }]}>
-                  <Input variant={'outlined'} fullWidth={true} placeholder={"Enter your name"} />
+                <Form.Item
+                  name="name"
+                  rules={[{ required: true, message: 'Please enter your name' }]}
+                >
+                  <Input
+                    prefix={<UserOutlined />}
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Enter your name"
+                  />
                 </Form.Item>
-                <Form.Item name="email" rules={[{ required: true, message: 'Please enter your email' }, { type: 'email', message: 'Please enter a valid email' }]}>
-                  <Input variant={'outlined'} fullWidth={true} placeholder={"Email"} />
+                <Form.Item
+                  name="email"
+                  rules={[
+                    { required: true, message: 'Please enter your email' },
+                    { type: 'email', message: 'Please enter a valid email' },
+                  ]}
+                >
+                  <Input
+                    prefix={<MailOutlined />}
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Email"
+                  />
                 </Form.Item>
-                <Form.Item name="message" rules={[{ required: true, message: 'Please enter your message' }]}>
-                  <TextArea variant={'outlined'} fullWidth={true} placeholder={"Message"} />
+                <Form.Item
+                  name="phone"
+                  rules={[
+                    { required: true, message: 'Please enter your phone number' },
+                    {
+                      pattern: /^\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})$/,
+                      message: 'Please enter a valid US phone number',
+                    },
+                  ]}
+                >
+                  <Input
+                    prefix={<PhoneOutlined />}
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Phone Number"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="message"
+                  rules={[{ required: true, message: 'Please enter your message' }]}
+                >
+                  <TextArea variant="outlined" fullWidth placeholder="Message" />
                 </Form.Item>
                 <div className="form-group">
-                  <Button type="primary" htmlType="submit">Send</Button>
+                  <Button type="primary" htmlType="submit">
+                    Send
+                  </Button>
                 </div>
               </Form>
             </div>
           </div>
         </div>
       </div>
-      <FooterBanner attachment={true}/>
-      <Footer/>
+      <FooterBanner attachment={true} />
+      <Footer />
     </div>
   );
 };

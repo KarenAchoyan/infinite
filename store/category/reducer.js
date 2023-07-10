@@ -19,31 +19,6 @@ const initialState = {
 
 const categoryReducer = handleActions(
   {
-    [getCategories]: (state) => ({
-      ...state,
-      isFetching: true,
-      error: null,
-    }),
-    [getCategory]: (state) => ({
-      ...state,
-      isFetching: true,
-      error: null,
-    }),
-    [addCategory]: (state) => ({
-      ...state,
-      isAdding: true,
-      error: null,
-    }),
-    [updateCategory]: (state) => ({
-      ...state,
-      isUpdating: true,
-      error: null,
-    }),
-    [deleteCategory]: (state) => ({
-      ...state,
-      isDeleting: true,
-      error: null,
-    }),
     [getCategories.success]: (state, { payload }) => ({
       ...state,
       categories: payload,
